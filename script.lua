@@ -58,7 +58,6 @@ local function ExtractData(humdes)
 	for _,v in pairs({"Hat","Hair","Back","Face","Front","Neck","Shoulders","Waist"}) do
 		ava[v .. "Accessory"] = humdes[v .. "Accessory"]
 	end
-
 	ava.Emotes = humdes:GetEmotes()
 
 	local layered = humdes:GetAccessories(false)
@@ -138,6 +137,15 @@ local clipbuttons = Avatar:AddHorizontalAlignment()
 
 clipbuttons:AddButton("Load Avatar",function()
     if avatarclipboard then
+        ConnectionEvent:FireServer(315,avatarclipboard,true)
+    end
+end)
+
+clipbuttons:AddButton("Load Hair Combo",function()
+    if avatarclipboard then
+		local data = Connection:InvokeServer(Constants.AE_REQUEST_AE_DATA)
+		local wearing = data.PlayerCurrentTemporaryOutfit or data.PlayerCurrentlyWearing
+		wearing.HairAccessory = avatarclipboard.HairAccessory
         ConnectionEvent:FireServer(315,avatarclipboard,true)
     end
 end)
