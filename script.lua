@@ -18,12 +18,25 @@ end
 
 local library = loadstring(game:HttpGet("https://pastebin.com/raw/6EEJc0M5",true))() -- https://pastebin.com/raw/SjcYQ23F
 
-local Window = library:AddWindow("   " .. MarketplaceService:GetProductInfo(game.PlaceId).Name .. "      THIS GUI WAS MADE BY SYNOLOPE", {
+local Window,frame = library:AddWindow("   " .. MarketplaceService:GetProductInfo(game.PlaceId).Name .. "      THIS GUI WAS MADE BY SYNOLOPE", {
 	main_color = Color3.fromRGB(151, 85, 163),
 	min_size = Vector2.new(500, 600),
 	toggle_key = Enum.KeyCode.RightShift,
 	can_resize = true,
 })
+
+frame:GetPropertyChangedSignal("Position"):Connect(function()
+	local pos = frame.Position
+	writefile("meepcityguipos.txt",tostring(pos.X.Scale) .. "," .. tostring(pos.X.Offset) .. "," .. tostring(pos.Y.Scale) .. "," .. tostring(pos.Y.Offset))
+end)
+
+if isfile("meepcityguipos.txt") then
+	local posnums = string.split(readfile("meepcityguipos.txt"),",")
+	coroutine.wrap(function()
+		service("RunService").Heartbeat:Wait()
+		for i = 1,10,1 do frame.Position = UDim2.new(table.unpack(posnums)) end
+	end)()
+end
 
 local Avatar = Window:AddTab("Avatar")
 local AvatarEditor = Window:AddTab("Avatar Editor")
