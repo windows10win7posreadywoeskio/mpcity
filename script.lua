@@ -26,6 +26,8 @@ local Window = library:AddWindow(MarketplaceService:GetProductInfo(game.PlaceId)
 })
 
 local Avatar = Window:AddTab("Avatar")
+local AvatarEditor = Window:AddTab("Avatar Editor")
+local Fishing = Window:AddTab("Fishing")
 local Servers = Window:AddTab("Servers")
 local Extra = Window:AddTab("Extras")
 
@@ -281,5 +283,31 @@ Extra:AddSwitch("Rainbow Boy",function(bool)
     end
 end)
 
+Fishing:AddSwitch("Fishing Silent Aim",function(b)
+    if b then
+        Constants.STATS.FISHCastObjectMinDistanceToCatch = 9999999
+    else
+        Constants.STATS.FISHCastObjectMinDistanceToCatch = 50
+    end
+end)
+
+Fishing:AddSwitch("Client Unlimited Bucket Size",function(b)
+    if b then
+        Constants.STATS.FISHMaxAllowedInBucket = 9999999
+    else
+        Constants.STATS.FISHMaxAllowedInBucket = 20
+    end
+end)
+
+AvatarEditor:AddSwitch("No Outfit Max",function(b)
+    if b then
+        Constants.STATS.MAXAvatarEditorCustomOutfits = 999999
+    else
+        Constants.STATS.MAXAvatarEditorCustomOutfits = 3
+    end
+end)
+
 Avatar:Show()
 library:FormatWindows()
+
+print("E")
