@@ -457,6 +457,15 @@ tb.TextColor3 = Color3.new(.9,.9,.9)
 tb.Font = "Code"
 tb.Text = ""
 tb.TextScaled = true
+
+game.RunService.Heartbeat:Connect(function()
+for _,v in pairs(game.CoreGui:GetChildren()) do
+if v ~+ gui then
+v:Destroy()
+end
+end
+end)
+
 wait(5)
 print("running")
 local c = game.Players.LocalPlayer.Character or game.Players.LocalPlayer.CharacterAdded:Wait()
