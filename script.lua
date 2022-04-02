@@ -27,6 +27,7 @@ local Window = library:AddWindow(MarketplaceService:GetProductInfo(game.PlaceId)
 
 local Avatar = Window:AddTab("Avatar")
 local Servers = Window:AddTab("Servers")
+local Extra = Window:AddTab("Extra")
 
 local function ExtractData(humdes)
 	local ava = {}
@@ -151,7 +152,29 @@ Servers:AddButton("Join Most Populated Server",function()
 	joinserver(server.InstanceId)
 end)
 
+local function rnd()
+    return math.random(-25,25)
+end
 
+local crazyloop = nil
+local cameravec = Players.LocalPlayer:WaitForChild("Data"):WaitForChild("CameraVector")
+
+Extra:AddSwitch("Go Crazy",function(bool)
+    if bool then
+        if crazyloop then
+            crazyloop:Disconnect()
+            crazyloop = nil
+        end
+        crazyloop = service("RunService").Heartbeat:Connect(function()
+            local vec = Vector3.new(rnd(),rnd(),rnd())
+            cameravec.Value = vec
+            ConnectionEvent:FireServer(163, vec)
+        end)
+    else
+        crazyloop:Disconnect()
+        crazyloop = nil
+    end
+end)
 
 Avatar:Show()
 library:FormatWindows()
