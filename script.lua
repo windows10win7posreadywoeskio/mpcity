@@ -58,6 +58,8 @@ local function ExtractData(humdes)
 		ava[v .. "Accessory"] = humdes[v .. "Accessory"]
 	end
 
+	ava.Emotes = humdes:GetEmotes()
+
 	local layered = humdes:GetAccessories(false)
 
 	for i,v in pairs(layered) do
