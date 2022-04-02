@@ -29,9 +29,10 @@ local Avatar = Window:AddTab("Avatar")
 local Servers = Window:AddTab("Servers")
 local Extra = Window:AddTab("Extra")
 
+local function colorToTable(clr) return {tostring(clr.R*255),tostring(clr.G*255),tostring(clr.B*255)} end
+
 local function ExtractData(humdes)
 	local ava = {}
-	local function colorToTable(clr) return {tostring(clr.R*255),tostring(clr.G*255),tostring(clr.B*255)} end
 
 	for _,v in pairs({"WidthScale", "HeadScale","HeightScale","DepthScale","BodyTypeScale","ProportionScale"}) do
 		ava[v] = humdes[v]
@@ -215,6 +216,33 @@ Extra:AddSwitch("Go Crazy",function(bool)
     else
         crazyloop:Disconnect()
         crazyloop = nil
+    end
+end)
+
+local h = 0
+local rainbowloop = nil
+
+Extra:AddSwitch("Rainbow Boy",function(bool)
+    if bool then
+        if rainbowloop then
+            rainbowloop:Disconnect()
+            rainbowloop = nil
+        end
+        rainbowloop = service("RunService").Heartbeat:Connect(function()
+            if h > 1 then
+                h = h - 1
+            end
+            local data = Connection:InvokeServer(Constants.AE_REQUEST_AE_DATA)
+            local wearing = data.PlayerCurrentTemporaryOutfit or data.PlayerCurrentlyWearing
+            for _,v in pairs({"HeadColor","LeftArmColor","RightArmColor","LeftLegColor","RightLegColor","TorsoColor"}) do
+	        	wearing[v] = colorToTable(Color3.fromHSV(h,1,1))
+            end
+            ConnectionEvent:FireServer(315,wearing,true)
+            h = h + 0.001
+        end)
+    else
+        rainbowloop:Disconnect()
+        rainbowloop = nil
     end
 end)
 
