@@ -136,6 +136,8 @@ Players.PlayerAdded:Connect(LoadPlayer)
 
 local clipbuttons = Avatar:AddHorizontalAlignment()
 
+copytoclip()
+
 clipbuttons:AddButton("Copy Current Avatar",function()
 	local player = Players.LocalPlayer
 	local character = player.Character
