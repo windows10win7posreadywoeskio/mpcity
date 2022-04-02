@@ -1,3 +1,4 @@
+if not game:IsLoaded() then game.Loaded:Wait() end
 if game.CreatorId == 123247 then
 local loaderurl = "https://raw.githubusercontent.com/synolope/mpcity/main/loader.lua"
 local scripturl = "https://raw.githubusercontent.com/synolope/mpcity/main/script.lua"

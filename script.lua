@@ -8,6 +8,14 @@ local Constants = require(ReplicatedStorage:WaitForChild("Constants"))
 local Connection = ReplicatedStorage:WaitForChild("Connection")
 local ConnectionEvent = ReplicatedStorage:WaitForChild("ConnectionEvent")
 
+local function getservers()
+    return Connection:InvokeServer(399)
+end
+
+local function joinserver(instid)
+    return Connection:InvokeServer(400,instid)
+end
+
 local library = loadstring(game:HttpGet("https://pastebin.com/raw/6EEJc0M5",true))() -- https://pastebin.com/raw/SjcYQ23F
 
 local Window = library:AddWindow(MarketplaceService:GetProductInfo(game.PlaceId).Name, {
@@ -18,7 +26,7 @@ local Window = library:AddWindow(MarketplaceService:GetProductInfo(game.PlaceId)
 })
 
 local Avatar = Window:AddTab("Avatar")
-
+local Servers = Window:AddTab("Servers")
 
 local function ExtractData(humdes)
 	local ava = {}
@@ -137,6 +145,13 @@ clipbuttons:AddButton("Save Avatar",function()
 		Connection:InvokeServer(319,avatarclipboard)
     end
 end)
+
+Servers:AddButton("Join Most Populated Server",function()
+	local server = getservers()[1]
+	joinserver(server.InstanceId)
+end)
+
+
 
 Avatar:Show()
 library:FormatWindows()
