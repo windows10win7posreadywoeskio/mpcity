@@ -315,6 +315,24 @@ Extra:AddSwitch("Unlimited Whisper Length",function(b)
     end
 end)
 
+local oldplusfunc = nil
+
+Extra:AddButton("Spoof PLUS",function()
+    local v9 = require(ReplicatedStorage:WaitForChild("Global"));
+    oldplusfunc = hookfunction(v9.IsPlayerPLUS,function(p80)
+        local v110 = Players:GetPlayerByUserId(p80);
+	    if not v110 then
+	        return;
+	    end;
+	    if v110 == Players.LocalPlayer then
+	        v110:SetAttribute("PLUS",true)
+	        return true;
+	    else
+	        return v110:GetAttribute("PLUS") and false;
+	    end
+    end)
+end)
+
 Avatar:Show()
 library:FormatWindows()
 
