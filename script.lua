@@ -134,9 +134,15 @@ end
 for _,player in pairs(Players:GetPlayers()) do LoadPlayer(player) end
 Players.PlayerAdded:Connect(LoadPlayer)
 
-copytoclip()
-
 local clipbuttons = Avatar:AddHorizontalAlignment()
+
+clipbuttons:AddButton("Copy Current Avatar",function()
+	local player = Players.LocalPlayer
+	local character = player.Character
+	if character and character:FindFirstChild("Humanoid") and character.Humanoid:FindFirstChild("HumanoidDescription") then
+		copytoclip(ExtractData(character.Humanoid.HumanoidDescription),player.DisplayName)
+	end
+end)
 
 clipbuttons:AddButton("Load Avatar",function()
 	if avatarclipboard then
