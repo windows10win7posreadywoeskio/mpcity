@@ -146,7 +146,7 @@ clipbuttons:AddButton("Load Hair Combo",function()
 		local data = Connection:InvokeServer(Constants.AE_REQUEST_AE_DATA)
 		local wearing = data.PlayerCurrentTemporaryOutfit or data.PlayerCurrentlyWearing
 		wearing.HairAccessory = avatarclipboard.HairAccessory
-        ConnectionEvent:FireServer(315,avatarclipboard,true)
+        ConnectionEvent:FireServer(315,wearing,true)
     end
 end)
 
