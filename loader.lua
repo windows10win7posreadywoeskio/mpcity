@@ -1,8 +1,9 @@
-local loaderurl = "https://raw.githubusercontent.com/synolope/mpcity/main/loader.lua?token=GHSAT0AAAAAABTEMCA5SW6ONH2QFWSEKJXMYSHUCQQ"
-local scripturl = "https://raw.githubusercontent.com/synolope/mpcity/main/script.lua?token=GHSAT0AAAAAABTEMCA54XOVJHPRZVQ2YEKSYSHUAQA"
+if game.CreatorId == 123247 then
+local loaderurl = "https://raw.githubusercontent.com/synolope/mpcity/main/loader.lua"
+local scripturl = "https://raw.githubusercontent.com/synolope/mpcity/main/script.lua"
 loadstring(game:HttpGet(scripturl,true))()
-
 syn.queue_on_teleport([[
     wait(3)
     loadstring(game:HttpGet("]] .. loaderurl .. [[",true))()
 ]])
+end
