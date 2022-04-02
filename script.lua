@@ -211,6 +211,7 @@ Avatar:AddButton("Bypassed Shading",function()
     local data = Connection:InvokeServer(Constants.AE_REQUEST_AE_DATA)
 	local wearing = data.PlayerCurrentTemporaryOutfit or data.PlayerCurrentlyWearing
 	wearing.GraphicTShirt = "9196895619"
+	wearing.AccessoryBlob = {}
 	ConnectionEvent:FireServer(315,wearing,true)
 end)
 
@@ -220,6 +221,7 @@ Avatar:AddButton("Trapify",function()
 	wearing.GraphicTShirt = "9196895619"
 	wearing.Pants = "7591261065"
 	wearing.Shirt = "0"
+	wearing.AccessoryBlob = {}
 	ConnectionEvent:FireServer(315,wearing,true)
 end)
 
