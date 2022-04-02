@@ -214,6 +214,15 @@ Avatar:AddButton("Bypassed Shading",function()
 	ConnectionEvent:FireServer(315,wearing,true)
 end)
 
+Avatar:AddButton("Trapify",function()
+    local data = Connection:InvokeServer(Constants.AE_REQUEST_AE_DATA)
+	local wearing = data.PlayerCurrentTemporaryOutfit or data.PlayerCurrentlyWearing
+	wearing.GraphicTShirt = "9196895619"
+	wearing.Pants = "7591261065"
+	wearing.Shirt = "0"
+	ConnectionEvent:FireServer(315,wearing,true)
+end)
+
 Servers:AddButton("Join Most Populated Server",function()
 	local server = getservers()[1]
 	joinserver(server.InstanceId)
