@@ -18,7 +18,7 @@ end
 
 local library = loadstring(game:HttpGet("https://pastebin.com/raw/6EEJc0M5",true))() -- https://pastebin.com/raw/SjcYQ23F
 
-local Window = library:AddWindow(MarketplaceService:GetProductInfo(game.PlaceId).Name, {
+local Window = library:AddWindow("   " .. MarketplaceService:GetProductInfo(game.PlaceId).Name .. "      THIS GUI WAS MADE BY SYNOLOPE", {
 	main_color = Color3.fromRGB(151, 85, 163),
 	min_size = Vector2.new(500, 600),
 	toggle_key = Enum.KeyCode.RightShift,
