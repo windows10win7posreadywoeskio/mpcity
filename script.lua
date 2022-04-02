@@ -27,7 +27,7 @@ local Window = library:AddWindow(MarketplaceService:GetProductInfo(game.PlaceId)
 
 local Avatar = Window:AddTab("Avatar")
 local Servers = Window:AddTab("Servers")
-local Extra = Window:AddTab("Extra")
+local Extra = Window:AddTab("Extras")
 
 local function colorToTable(clr) return {tostring(clr.R*255),tostring(clr.G*255),tostring(clr.B*255)} end
 
