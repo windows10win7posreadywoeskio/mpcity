@@ -307,6 +307,14 @@ AvatarEditor:AddSwitch("No Outfit Max",function(b)
     end
 end)
 
+Extra:AddSwitch("Unlimited Whisper Length",function(b)
+    if b then
+        Constants.STATS.WHISPER_MAX_CHARACTERS = 999999
+    else
+        Constants.STATS.WHISPER_MAX_CHARACTERS = 80
+    end
+end)
+
 Avatar:Show()
 library:FormatWindows()
 
