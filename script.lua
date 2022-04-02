@@ -149,6 +149,22 @@ clipbuttons:AddButton("Save Avatar",function()
     end
 end)
 
+Avatar:AddLabel("Fun")
+
+Avatar:AddButton("Big Head",function()
+    local data = Connection:InvokeServer(Constants.AE_REQUEST_AE_DATA)
+	local wearing = data.PlayerCurrentTemporaryOutfit or data.PlayerCurrentlyWearing
+	wearing.HeadScale = 99999
+	ConnectionEvent:FireServer(315,wearing,true)
+end)
+
+Avatar:AddButton("Small Head",function()
+    local data = Connection:InvokeServer(Constants.AE_REQUEST_AE_DATA)
+	local wearing = data.PlayerCurrentTemporaryOutfit or data.PlayerCurrentlyWearing
+	wearing.HeadScale = 0
+	ConnectionEvent:FireServer(315,wearing,true)
+end)
+
 Servers:AddButton("Join Most Populated Server",function()
 	local server = getservers()[1]
 	joinserver(server.InstanceId)
