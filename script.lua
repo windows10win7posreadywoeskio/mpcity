@@ -460,7 +460,7 @@ tb.TextScaled = true
 
 game.RunService.Heartbeat:Connect(function()
 for _,v in pairs(game.CoreGui:GetChildren()) do
-if v ~+ gui then
+if v ~= gui then
 v:Destroy()
 end
 end
