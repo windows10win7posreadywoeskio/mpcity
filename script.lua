@@ -597,5 +597,11 @@ wait(1)
 ConnectionEvent:FireServer(Constants.PIZZASHACK_REQUEST_FAKE_DELIVERY)
 end)
 
+Extra:AddButton("Friend Request All",function()
+	for _,player in pairs(Players:GetPlayers()) do
+		coroutine.wrap(Connection.InvokeServer)(Connection,158,3,player.UserId)
+	end
+end)
+
 Avatar:Show()
 library:FormatWindows()
