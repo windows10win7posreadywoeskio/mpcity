@@ -906,7 +906,11 @@ local function SelectAsset(title)
 	end
 end
 
-local assetdropdown = Shop:AddDropdown("Asset",SelectAsset)
+local function PurchaseAsset(asset)
+	if asset then
+		coroutine.wrap(Connection.InvokeServer)(Connection,19,1,asset.ObjectId,{["Quantity"] = 1,["PreferredPaymentMethod"] = "coins"})
+	end
+end
 
 for i,v in pairs(Furniture) do
 	local data = AssetList[v.AssetId]
@@ -921,17 +925,25 @@ table.sort(assetnames, function(a,b)
     return a < b
 end)
 
+local allcost = 0
+
+for i,v in pairs(LoadedAssets) do
+	allcost = allcost + (v.Details.Price.Coins or 0)
+end
+
+local purall = Shop:AddButton("Purchase All Assets (" .. tostring(allcost) .. " Coins)",function()
+	for i,v in pairs(LoadedAssets) do
+		PurchaseAsset(v)
+	end
+end)
+
+local assetdropdown = Shop:AddDropdown("Asset",SelectAsset)
+
 for i,v in pairs(assetnames) do
 	assetdropdown:Add(v)
 end
 
 local assetbuttons = Shop:AddHorizontalAlignment()
-
-local function PurchaseAsset(asset)
-	if asset then
-		coroutine.wrap(Connection.InvokeServer)(Connection,19,1,asset.ObjectId,{["Quantity"] = 1,["PreferredPaymentMethod"] = "coins"})
-	end
-end
 
 assetbuttons:AddButton("Purchase Asset",function()
 	PurchaseAsset(selectedasset)
