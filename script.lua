@@ -30,15 +30,6 @@ frame:GetPropertyChangedSignal("Position"):Connect(function()
 	writefile("meepcityguipos.txt",tostring(pos.X.Scale) .. "," .. tostring(pos.X.Offset) .. "," .. tostring(pos.Y.Scale) .. "," .. tostring(pos.Y.Offset))
 end)
 
-if isfile("meepcityguipos.txt") then
-	local posnums = string.split(readfile("meepcityguipos.txt"),",")
-	coroutine.wrap(function()
-
-		wait(.5)
-		for i = 1,10,1 do frame.Position = UDim2.new(table.unpack(posnums)) end
-	end)()
-end
-
 local Avatar = Window:AddTab("Avatar")
 local AvatarEditor = Window:AddTab("Avatar Editor")
 local Shop = Window:AddTab("Shop")
@@ -612,3 +603,12 @@ end)
 
 Avatar:Show()
 library:FormatWindows()
+
+if isfile("meepcityguipos.txt") then
+	local posnums = string.split(readfile("meepcityguipos.txt"),",")
+	coroutine.wrap(function()
+
+		wait(.5)
+		for i = 1,10,1 do frame.Position = UDim2.new(table.unpack(posnums)) end
+	end)()
+end
