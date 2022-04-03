@@ -330,6 +330,46 @@ AvatarEditor:AddSwitch("No Outfit Max",function(b)
 	end
 end)
 
+local function AddAccessoryString(str,id)
+	local ids = string.split(str or "",",") or {}
+	table.insert(ids,id)
+	return table.concat(ids,",")
+end
+
+AvatarEditor:AddTextBox("Equip AssetId",function(assetid)
+	assetid = tonumber(assetid)
+	if assetid then
+	local info = MarketplaceService:GetProductInfo(assetid)
+	local assettype = info.AssetTypeId
+	local data = Connection:InvokeServer(Constants.AE_REQUEST_AE_DATA)
+	local wearing = data.PlayerCurrentTemporaryOutfit or data.PlayerCurrentlyWearing
+	if assettype == 8 then
+		wearing.HeadAccessory = AddAccessoryString(wearing.HeadAccessory,assetid)
+	elseif assettype == 41 then
+		wearing.HairAccessory = AddAccessoryString(wearing.HairAccessory,assetid)
+	elseif assettype == 42 then
+		wearing.FaceAccessory = AddAccessoryString(wearing.FaceAccessory,assetid)
+	elseif assettype == 43 then
+		wearing.NeckAccessory = AddAccessoryString(wearing.NeckAccessory,assetid)
+	elseif assettype == 44 then
+		wearing.ShouldersAccessory = AddAccessoryString(wearing.ShoulderAccessory,assetid)
+	elseif assettype == 45 then
+		wearing.FrontAccessory = AddAccessoryString(wearing.FrontAccessory,assetid)
+	elseif assettype == 46 then
+		wearing.BackAccessory = AddAccessoryString(wearing.BackAccessory,assetid)
+	elseif assettype == 47 then
+		wearing.WaistAccessory = AddAccessoryString(wearing.WaistAccessory,assetid)
+	elseif assettype == 11 then
+		wearing.Shirt = assetid
+	elseif assettype == 12 then
+		wearing.Pants = assetid
+	elseif assettype == 2 then
+		wearing.GraphicTShirt = assetid
+	end
+	ConnectionEvent:FireServer(315,wearing,true)
+end
+end)
+
 Extra:AddSwitch("Unlimited Whisper Length",function(b)
 	if b then
 		Constants.STATS.WHISPER_MAX_CHARACTERS = 999999
