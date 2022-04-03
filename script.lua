@@ -886,7 +886,7 @@ Shop:AddButton("Make Offsale Assets Available",function()
 	end
 end)
 
-local assetprice = Shop:AddLabel("Asset Price")
+local assetprice = nil
 
 local Furniture = require(ReplicatedStorage:WaitForChild("Shop_Furniture")).Assets
 local AssetList = require(ReplicatedStorage.AssetList)
@@ -936,6 +936,8 @@ local purall = Shop:AddButton("Purchase All Assets (" .. tostring(allcost) .. " 
 		PurchaseAsset(v)
 	end
 end)
+
+assetprice = Shop:AddLabel("Asset Price")
 
 local assetdropdown = Shop:AddDropdown("Asset",SelectAsset)
 
