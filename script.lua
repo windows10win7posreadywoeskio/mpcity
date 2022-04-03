@@ -33,7 +33,8 @@ end)
 if isfile("meepcityguipos.txt") then
 	local posnums = string.split(readfile("meepcityguipos.txt"),",")
 	coroutine.wrap(function()
-		service("RunService").Heartbeat:Wait()
+
+		wait(.5)
 		for i = 1,10,1 do frame.Position = UDim2.new(table.unpack(posnums)) end
 	end)()
 end
@@ -355,77 +356,6 @@ Extra:AddButton("Spoof PLUS",function()
 	end)
 end)
 
---[[local selectedasset = nil
-
-local Furniture = {table.unpack(require(ReplicatedStorage.Shop_Furniture).Assets),table.unpack(require(ReplicatedStorage.Shop_HomeImprovement).Assets),table.unpack(require(ReplicatedStorage.Shop_PetShop).Assets),table.unpack(require(ReplicatedStorage.Shop_Toys).Assets)}
-local AssetList = {}
-
-for _,v in pairs(require(ReplicatedStorage.AssetList)) do
-	table.insert(AssetList,v)
-end
-
-table.sort(AssetList, function(a,b)
-    return a.Title < b.Title
-end)
-
-local assetlabels = {}
-
-local function GetAssetData(assetid)
-	local data = nil
-	for i,v in pairs(Furniture) do
-		if v.AssetId == assetid then
-			data = v
-			break
-		end
-	end
-	return data
-end
-
-local function SelectAsset(title)
-	local asset = nil
-	table.sort(AssetList, function(a,b)
-    	return false
-	end)
-	for i,v in pairs(AssetList) do
-		if v.Title == title then
-			asset = v
-			break
-		end
-	end
-	selectedasset = asset
-	local data = GetAssetData(asset.AssetId)
-	if data then
-		assetlabels.name.Text = "Name: " .. asset.Title
-		assetlabels.assetid.Text = "AssetId: " .. tostring(asset.AssetId)
-		assetlabels.cost.Text = "Price: " .. tostring(data.Details.Price.Coins or "No Price In Coins")
-	else
-		assetlabels.name.Text = "Name: " .. asset.Title
-		assetlabels.assetid.Text = "AssetId: " .. tostring(asset.AssetId)
-		assetlabels.cost.Text = "Price: Data Not Found"
-	end
-end
-
-local assetdropdown = Shop:AddDropdown("Asset",SelectAsset)
-
-assetlabels.name = Shop:AddLabel("Asset Name")
-assetlabels.assetid = Shop:AddLabel("AssetId")
-assetlabels.cost = Shop:AddLabel("Asset Price")
-
-for i,v in pairs(AssetList) do
-	assetdropdown:Add(v.Title)
-end
-
-local assetbuttons = Shop:AddHorizontalAlignment()
-
-assetbuttons:AddButton("Purchase Asset",function()
-	if selectedasset then
-		local data = GetAssetData(selectedasset.AssetId)
-		if data then
-			Connection:InvokeServer(19,1,data.ObjectId,{["Quantity"] = 1,["PreferredPaymentMethod"] = "coins"})
-		end
-	end
-end)]]
-
 local onsaleran = false
 
 Shop:AddButton("Make Offsale Assets Available",function()
@@ -456,6 +386,107 @@ Shop:AddButton("Make Offsale Assets Available",function()
 		onsale(game.ReplicatedStorage:WaitForChild("Shop_HomeImprovement"))
 		onsale(game.ReplicatedStorage:WaitForChild("Shop_PetShop"))
 	end
+end)
+
+local assetprice = Shop:AddLabel("Asset Price")
+
+local Furniture = require(ReplicatedStorage:WaitForChild("Shop_Furniture")).Assets
+local AssetList = require(ReplicatedStorage.AssetList)
+local LoadedAssets = {}
+local assetnames = {}
+
+local selectedasset = nil
+
+local function SelectAsset(title)
+	local asset = LoadedAssets[title]
+	selectedasset = asset
+	local coins = asset.Details.Price.Coins
+	if coins then
+		assetprice.Text = "Asset Price: " .. tostring(coins) .. " Coins"
+	else
+		assetprice.Text = "Asset Price: Unavailable"
+	end
+end
+
+local assetdropdown = Shop:AddDropdown("Asset",SelectAsset)
+
+for i,v in pairs(Furniture) do
+	local data = AssetList[v.AssetId]
+	if data then
+		local title = data.Title
+		LoadedAssets[title] = v
+		table.insert(assetnames,title)
+	end
+end
+
+table.sort(assetnames, function(a,b)
+    return a < b
+end)
+
+for i,v in pairs(assetnames) do
+	assetdropdown:Add(v)
+end
+
+local assetbuttons = Shop:AddHorizontalAlignment()
+
+local function PurchaseAsset(asset)
+	if asset then
+		coroutine.wrap(Connection.InvokeServer)(Connection,19,1,asset.ObjectId,{["Quantity"] = 1,["PreferredPaymentMethod"] = "coins"})
+	end
+end
+
+assetbuttons:AddButton("Purchase Asset",function()
+	PurchaseAsset(selectedasset)
+end)
+
+assetbuttons:AddButton("Purchase Asset X10",function()
+	for i = 1,10,1 do PurchaseAsset(selectedasset) end
+end)
+
+assetbuttons:AddButton("Purchase Asset X100",function()
+	for i = 1,100,1 do PurchaseAsset(selectedasset) end
+end)
+
+local friends = Connection:InvokeServer(153)
+local allfriends = {}
+for i,v in pairs(friends.OnlineFriends) do
+	allfriends[v.Username] = v
+end
+for i,v in pairs(friends.OfflineFriends) do
+	allfriends[v.Username] = v
+end
+
+local selectedfriend = nil
+
+local function SelectFriend(username)
+	selectedfriend = allfriends[username]
+end
+
+local friendsdropdown = Shop:AddDropdown("Friends",SelectFriend)
+
+for i,v in pairs(allfriends) do
+	friendsdropdown:Add(i)
+end
+
+local giftbuttons = Shop:AddHorizontalAlignment()
+
+local function GiftAsset(asset,userid)
+	if asset and userid then
+	print(asset,userid)
+		coroutine.wrap(Connection.InvokeServer)(Connection,192,1,asset.ObjectId,{["GiftUserId"] = userid})
+	end
+end
+
+giftbuttons:AddButton("Gift Asset",function()
+	GiftAsset(selectedasset,selectedfriend.UserId)
+end)
+
+giftbuttons:AddButton("Gift Asset X10",function()
+	for i = 1,10,1 do GiftAsset(selectedasset,selectedfriend.UserId) end
+end)
+
+giftbuttons:AddButton("Gift Asset X100",function()
+	for i = 1,100,1 do GiftAsset(selectedasset,selectedfriend.UserId) end
 end)
 
 Extra:AddButton("Generate Coins",function()
