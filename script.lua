@@ -603,5 +603,12 @@ Extra:AddButton("Friend Request All",function()
 	end
 end)
 
+Extra:AddTextBox("Whisper All Friends (Can Be Laggy)",function(message)
+	for i,v in pairs(Connection:InvokeServer(153).OnlineFriends) do
+		Connection:InvokeServer(275,v.UserId,"hello")
+		ConnectionEvent:FireServer(276,v.UserId)
+	end
+end)
+
 Avatar:Show()
 library:FormatWindows()
