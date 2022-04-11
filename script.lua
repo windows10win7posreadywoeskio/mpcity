@@ -246,6 +246,12 @@ Servers:AddButton("Join Most Populated Server",function()
 	joinserver(server.InstanceId)
 end)
 
+Servers:AddButton("Join Least Populated Server",function()
+	local servers = getservers()
+	local server = servers[#servers]
+	joinserver(server.InstanceId)
+end)
+
 Servers:AddButton("Join Random Server",function()
 	local servers = getservers()
 	local server = servers[math.random(1, #servers)]
