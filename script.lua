@@ -344,7 +344,7 @@ Avatar:AddSwitch("Chameleon Skin",function(bool)
 			chameleon = nil
 		end
 		local c = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
-		flashloop = c.HumanoidRootPart.Touched:Connect(function(p)
+		chameleon = c.HumanoidRootPart.Touched:Connect(function(p)
 			pcall(function()
 				if p.Transparency == 0 then
 			local data = Connection:InvokeServer(Constants.AE_REQUEST_AE_DATA)
