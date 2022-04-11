@@ -289,8 +289,9 @@ end)
 
 local h = 0
 local rainbowloop = nil
+local flashloop = nil
 
-Extra:AddSwitch("Rainbow Boy",function(bool)
+Avatar:AddSwitch("Rainbow",function(bool)
 	if bool then
 		if rainbowloop then
 			rainbowloop:Disconnect()
@@ -311,6 +312,53 @@ Extra:AddSwitch("Rainbow Boy",function(bool)
 	else
 		rainbowloop:Disconnect()
 		rainbowloop = nil
+	end
+end)
+
+Avatar:AddSwitch("Flashy",function(bool)
+	if bool then
+		if flashloop then
+			flashloop:Disconnect()
+			flashloop = nil
+		end
+		flashloop = service("RunService").Heartbeat:Connect(function()
+			local data = Connection:InvokeServer(Constants.AE_REQUEST_AE_DATA)
+			local wearing = data.PlayerCurrentTemporaryOutfit or data.PlayerCurrentlyWearing
+			for _,v in pairs({"HeadColor","LeftArmColor","RightArmColor","LeftLegColor","RightLegColor","TorsoColor"}) do
+				wearing[v] = colorToTable(BrickColor.Random().Color)
+			end
+			ConnectionEvent:FireServer(315,wearing,true)
+		end)
+	else
+		flashloop:Disconnect()
+		flashloop = nil
+	end
+end)
+
+local chameleon = nil
+
+Avatar:AddSwitch("Chameleon Skin",function(bool)
+	if bool then
+		if chameleon then
+			chameleon:Disconnect()
+			chameleon = nil
+		end
+		local c = Players.LocalPlayer.Character or Players.LocalPlayer.CharacterAdded:Wait()
+		flashloop = c.HumanoidRootPart.Touched:Connect(function(p)
+			pcall(function()
+				if p.Transparency == 0 then
+			local data = Connection:InvokeServer(Constants.AE_REQUEST_AE_DATA)
+			local wearing = data.PlayerCurrentTemporaryOutfit or data.PlayerCurrentlyWearing
+			for _,v in pairs({"HeadColor","LeftArmColor","RightArmColor","LeftLegColor","RightLegColor","TorsoColor"}) do
+				wearing[v] = colorToTable(p.Color)
+			end
+			ConnectionEvent:FireServer(315,wearing,true)
+		end
+		end)
+		end)
+	else
+		chameleon:Disconnect()
+		chameleon = nil
 	end
 end)
 
