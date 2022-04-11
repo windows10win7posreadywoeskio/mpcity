@@ -1039,7 +1039,7 @@ wait(2)
 local c = 0
 
 for i = 1,10,1 do
-for i = 1,1000,1 do
+for i = 1,10000,1 do
 coroutine.wrap(function()
 local args = {
     [1] = 369
