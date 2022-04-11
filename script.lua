@@ -258,6 +258,11 @@ Servers:AddButton("Join Random Server",function()
 	joinserver(server.InstanceId)
 end)
 
+Servers:AddButton("Open Server GUI",function()
+	local serverbrowsermodule = require(game.Players.LocalPlayer.PlayerGui:WaitForChild("ServerBrowserGui"):WaitForChild("ServerBrowserGUI"))
+	serverbrowsermodule.Open()
+end)
+
 local function rnd()
 	return math.random(-25,25)
 end
