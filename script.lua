@@ -923,6 +923,29 @@ Reckless:AddSwitch("Spam Teleport Notification All",function(bool)
 	end
 end)
 
+local spamballons = nil
+
+local c = 0
+
+Reckless:AddSwitch("Spam Ballons",function(bool)
+	if bool then
+		if spamballons then
+			spamballons:Disconnect()
+			spamballons = nil
+		end
+		spamballons = service("RunService").Heartbeat:Connect(function()
+			c = c + 1
+			if c%5 == 0 then
+				Connection:InvokeServer(201, 1312, {})
+				Connection:InvokeServer(202)
+			end
+		end)
+	else
+		spamballons:Disconnect()
+		spamballons = nil
+	end
+end)
+
 local oldplusfunc = nil
 
 Extra:AddButton("Spoof PLUS",function()
