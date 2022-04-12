@@ -35,6 +35,7 @@ local AvatarEditor = Window:AddTab("Avatar Editor")
 local Shop = Window:AddTab("Shop")
 local Fishing = Window:AddTab("Fishing")
 local Servers = Window:AddTab("Servers")
+local Reckless = Window:AddTab("Reckless")
 local Extra = Window:AddTab("Extras")
 
 local function colorToTable(clr) return {tostring(clr.R*255),tostring(clr.G*255),tostring(clr.B*255)} end
@@ -903,39 +904,22 @@ end)
 
 local notifloop = nil
 
-Extra:AddSwitch("Spam Teleport Notification All",function(bool)
+Reckless:AddSwitch("Spam Teleport Notification All",function(bool)
 	if bool then
 		if notifloop then
 			notifloop:Disconnect()
 			notifloop = nil
 		end
 		notifloop = service("RunService").Heartbeat:Connect(function()
-			for _, player in pairs(Players:GetPlayers()) do
-				Connection:InvokeServer(154,player.UserId,{})
+			if os.time()%2 == 0 then
+				for _, player in pairs(Players:GetPlayers()) do
+					Connection:InvokeServer(154,player.UserId,{})
+				end
 			end
 		end)
 	else
 		notifloop:Disconnect()
 		notifloop = nil
-	end
-end)
-
-local notiflag = nil
-
-Extra:AddSwitch("Multithreaded Spam Teleport Notification All (More Laggy)",function(bool)
-	if bool then
-		if notiflag then
-			notiflag:Disconnect()
-			notiflag = nil
-		end
-		notiflag = service("RunService").Heartbeat:Connect(function()
-			for _, player in pairs(Players:GetPlayers()) do
-				coroutine.wrap(Connection.InvokeServer)(Connection,154,player.UserId,{})
-			end
-		end)
-	else
-		notiflag:Disconnect()
-		notiflag = nil
 	end
 end)
 
