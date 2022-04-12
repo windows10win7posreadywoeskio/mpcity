@@ -903,7 +903,7 @@ end)
 
 local notifloop = nil
 
-Extra:AddSwitch("SpAM Teleport Notification All",function(bool)
+Extra:AddSwitch("Spam Teleport Notification All",function(bool)
 	if bool then
 		if notifloop then
 			notifloop:Disconnect()
@@ -922,7 +922,7 @@ end)
 
 local notiflag = nil
 
-Extra:AddSwitch("SpAM Teleport Notification All (Lag Game)",function(bool)
+Extra:AddSwitch("Multithreaded Spam Teleport Notification All (More Laggy)",function(bool)
 	if bool then
 		if notiflag then
 			notiflag:Disconnect()
