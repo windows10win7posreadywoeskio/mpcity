@@ -20,7 +20,7 @@ local library = loadstring(game:HttpGet("https://pastebin.com/raw/6EEJc0M5",true
 
 local Window,frame = library:AddWindow("   " .. MarketplaceService:GetProductInfo(game.PlaceId).Name .. "      THIS GUI WAS MADE BY SYNOLOPE", {
 	main_color = Color3.fromRGB(252, 186, 3),
-	min_size = Vector2.new(500, 600),
+	min_size = Vector2.new(550, 600),
 	toggle_key = Enum.KeyCode.RightShift,
 	can_resize = true,
 })
@@ -1147,6 +1147,36 @@ Extra:AddTextBox("Whisper All Friends (Can Be Laggy)",function(message)
 	end
 end)
 
+coroutine.wrap(function()
+	local VirtualWorld = workspace:WaitForChild("VW")
+	if VirtualWorld then
+		VirtualWorld:WaitForChild("Mannequin")
+		local Mannequins = Window:AddTab("Mannequins")
+		local function LoadModel(model)
+			if model.Name == "Mannequin" then
+				coroutine.wrap(function()
+					local Outfit = model:WaitForChild("Interaction").Outfit.Value
+					local outfit = HttpService:JSONDecode(Outfit)
+					if #outfit == 0 then repeat wait(1) Outfit = model:WaitForChild("Interaction").Outfit.Value outfit = HttpService:JSONDecode(Outfit) until #outfit ~= 0 end
+					Mannequins:AddLabel(outfit[2])
+					local mbuttons = Mannequins:AddHorizontalAlignment()
+					mbuttons:AddButton("Load",function()
+						ConnectionEvent:FireServer(315,outfit[3],true)
+					end)
+					mbuttons:AddButton("Save",function()
+						Connection:InvokeServer(65,outfit[2])
+						Connection:InvokeServer(319,outfit[3])
+					end)
+				end)()
+			end
+		end
+		for _,model in pairs(VirtualWorld:GetChildren()) do
+			LoadModel(model)
+		end
+		VirtualWorld.ChildAdded:Connect(LoadModel)
+	end
+end)()
+
 Avatar:Show()
 library:FormatWindows()
 
@@ -1154,7 +1184,7 @@ if isfile("meepcityguipos.txt") then
 	local posnums = string.split(readfile("meepcityguipos.txt"),",")
 	coroutine.wrap(function()
 
-		wait(.5)
+		wait(.1)
 		for i = 1,10,1 do frame.Position = UDim2.new(table.unpack(posnums)) end
 	end)()
 end
