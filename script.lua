@@ -903,7 +903,7 @@ end)
 
 local notifloop = nil
 
-Extra:AddSwitch("SPAM TELEPORT NOTIFICATION ALL (Crashes Game)",function(bool)
+Extra:AddSwitch("SpAM Teleport Notification All",function(bool)
 	if bool then
 		if notifloop then
 			notifloop:Disconnect()
@@ -911,12 +911,31 @@ Extra:AddSwitch("SPAM TELEPORT NOTIFICATION ALL (Crashes Game)",function(bool)
 		end
 		notifloop = service("RunService").Heartbeat:Connect(function()
 			for _, player in pairs(Players:GetPlayers()) do
-				coroutine.wrap(Connection.InvokeServer)(Connection,154,player.UserId,{})
+				Connection:InvokeServer(154,player.UserId,{})
 			end
 		end)
 	else
 		notifloop:Disconnect()
 		notifloop = nil
+	end
+end)
+
+local notiflag = nil
+
+Extra:AddSwitch("SpAM Teleport Notification All (Lag Game)",function(bool)
+	if bool then
+		if notiflag then
+			notiflag:Disconnect()
+			notiflag = nil
+		end
+		notiflag = service("RunService").Heartbeat:Connect(function()
+			for _, player in pairs(Players:GetPlayers()) do
+				coroutine.wrap(Connection.InvokeServer)(Connection,154,player.UserId,{})
+			end
+		end)
+	else
+		notiflag:Disconnect()
+		notiflag = nil
 	end
 end)
 
