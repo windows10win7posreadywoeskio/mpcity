@@ -1071,6 +1071,7 @@ end)
 
 local friends = Connection:InvokeServer(153)
 local allfriends = {}
+wait()
 for i,v in pairs(friends.OnlineFriends) do
 	allfriends[v.Username] = v
 end
