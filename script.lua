@@ -18,7 +18,13 @@ end
 
 local library = loadstring(game:HttpGet("https://pastebin.com/raw/6EEJc0M5",true))() -- https://pastebin.com/raw/SjcYQ23F
 
-local Window,frame = library:AddWindow("   " .. MarketplaceService:GetProductInfo(game.PlaceId).Name .. "      THIS GUI WAS MADE BY SYNOLOPE", {
+local guiname = "   " .. MarketplaceService:GetProductInfo(game.PlaceId).Name .. "      THIS GUI WAS MADE BY SYNOLOPE"
+
+if Players.LocalPlayer.UserId == 3207091435 then -- little something for me
+	guiname = "   " .. MarketplaceService:GetProductInfo(game.PlaceId).Name .. "      OWNER GUI"
+end
+
+local Window,frame = library:AddWindow(guiname, {
 	main_color = Color3.fromRGB(252, 186, 3),
 	min_size = Vector2.new(550, 600),
 	toggle_key = Enum.KeyCode.RightShift,
