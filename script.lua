@@ -42,7 +42,111 @@ local Shop = Window:AddTab("Shop")
 local Fishing = Window:AddTab("Fishing")
 local Servers = Window:AddTab("Servers")
 local Reckless = Window:AddTab("Reckless")
+local ToysW = Window:AddTab("Toys")
 local Extra = Window:AddTab("Extras")
+
+local AssetList = require(ReplicatedStorage.AssetList)
+local NewActionItems = require(ReplicatedStorage.ClientClasses.NewActionItems)
+local Toys = require(ReplicatedStorage.ClientClasses.Toys)
+
+local function GetAllToys()
+	local alltoys = {}
+	for i,v in pairs(AssetList) do
+		if v.ToyParentAssetId and v.AssetType == Constants.ASSET_TYPE.Toy then
+			table.insert(alltoys,{v.AssetId,v.Title,v.ToyParentAssetId})
+		end
+	end
+	return alltoys
+end
+
+local function GetAllItems()
+	local allitems = {}
+	for i,v in pairs(AssetList) do
+		if v.ActionItemParentAssetId and v.AssetType == Constants.ASSET_TYPE.ActionItem then
+			table.insert(allitems,{v.AssetId,v.Title,v.ActionItemParentAssetId})
+		end
+	end
+	return allitems
+end
+
+local function LoadToy(id)
+	local asset = AssetList[id]
+	if asset and asset.ToyParentAssetId then
+		local parentasset = AssetList[asset.ToyParentAssetId]
+		if parentasset then
+			Toys.RequestToy(id)
+		end
+	end
+end
+
+local function LoadItem(id)
+	local asset = AssetList[id]
+	if asset and asset.ActionItemParentAssetId then
+		local parentasset = AssetList[asset.ActionItemParentAssetId]
+		if parentasset then
+			NewActionItems.RequestActionItem(id,{})
+		end
+	end
+end
+
+
+local selectedtoy = nil
+
+local toyD = ToysW:AddDropdown("Select Toy",function(toyname)
+	for i,v in pairs(GetAllToys()) do
+		if v[2] == toyname then
+			selectedtoy = v
+			break
+		end
+	end
+end)
+
+local abctoys = GetAllToys()
+
+table.sort(abctoys, function(a,b)
+    return a[2] < b[2]
+end)
+
+for i,v in pairs(abctoys) do
+	if v[2] then toyD:Add(v[2]) end
+end
+
+ToysW:AddButton("Load Toy",function()
+	if selectedtoy then
+		LoadToy(selectedtoy[1])
+	end
+end)
+
+--[[
+
+local selecteditem = nil
+
+local itemD = ToysW:AddDropdown("Select Item",function(itemname)
+	for i,v in pairs(GetAllItems()) do
+		if v[2] == itemname then
+			selecteditem = v
+			break
+		end
+	end
+end)
+
+local abcitems = GetAllItems()
+
+table.sort(abcitems, function(a,b)
+    return a[2] < b[2]
+end)
+
+for i,v in pairs(abcitems) do
+	if v[2] then itemD:Add(v[2]) end
+end
+
+ToysW:AddButton("Load Item",function()
+	if selecteditem then
+		LoadItem(selecteditem[1])
+	end
+end)
+
+]]
 
 local function colorToTable(clr) return {tostring(clr.R*255),tostring(clr.G*255),tostring(clr.B*255)} end
 
