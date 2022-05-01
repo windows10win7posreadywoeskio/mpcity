@@ -29,7 +29,7 @@ if game.CreatorId == 123247 or game.PlaceId == 370731277 and continuee == true t
 	if identifyexecutor() == "Synapse X" then
 		scripturl = githublink .. "synapse.lua"
 	end
-	if identifyexecutor() == "Krnl" then
+	if identifyexecutor() == "Krnl" or queue_on_teleport then
 		scripturl = githublink .. "krnl.lua"
 	end
 	queueOnTeleport([[
