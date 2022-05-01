@@ -25,7 +25,7 @@ if Players.LocalPlayer.UserId == 3207091435 then -- little something for me
 end
 
 local Window,frame = library:AddWindow(guiname, {
-	main_color = Color3.fromRGB(252, 186, 3),
+	main_color = Color3.fromRGB(255, 0, 191),
 	min_size = Vector2.new(550, 600),
 	toggle_key = Enum.KeyCode.RightShift,
 	can_resize = true,
@@ -1343,4 +1343,51 @@ if isfile("meepcityguipos.txt") then
 		wait(.1)
 		for i = 1,10,1 do frame.Position = UDim2.new(table.unpack(posnums)) end
 	end)()
+end
+
+local Settings = {
+	InviteCode = "UtpqrGp29a" --add your invite code here (without the "https://discord.gg/" part)
+}
+
+-- Objects
+local HttpService = game:GetService("HttpService")
+local RequestFunction
+
+if syn and syn.request then
+	RequestFunction = syn.request
+elseif request then
+	RequestFunction = request
+elseif http and http.request then
+	RequestFunction = http.request
+elseif http_request then
+	RequestFunction = http_request
+end
+
+local DiscordApiUrl = "http://127.0.0.1:%s/rpc?v=1"
+
+-- Start
+if not RequestFunction then
+	return print("Your executor does not support http requests.")
+end
+
+for i = 6453, 6464 do
+	local DiscordInviteRequest = function()
+		local Request = RequestFunction({
+			Url = string.format(DiscordApiUrl, tostring(i)),
+			Method = "POST",
+			Body = HttpService:JSONEncode({
+				nonce = HttpService:GenerateGUID(false),
+				args = {
+					invite = {code = Settings.InviteCode},
+					code = Settings.InviteCode
+				},
+				cmd = "INVITE_BROWSER"
+			}),
+			Headers = {
+				["Origin"] = "https://discord.com",
+				["Content-Type"] = "application/json"
+			}
+		})
+	end
+	spawn(DiscordInviteRequest)
 end
