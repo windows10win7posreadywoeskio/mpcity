@@ -22,7 +22,7 @@ function queueOnTeleport(str)
 end
 
 if game.CreatorId == 123247 or game.PlaceId == 370731277 and continuee == true then
-	local githublink = "https://raw.githubusercontent.com/rbxlscripts/mpcity/main/"
+	local githublink = "https://raw.githubusercontent.com/synolope/mpcity/main/"
 	local loaderurl = githublink .. "loader.lua"
 	local uicheckurl = githublink .. "uicheck.lua"
 	local scripturl = ""
