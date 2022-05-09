@@ -1,5 +1,4 @@
 if not game:IsLoaded() then game.Loaded:Wait() end
-loadstring(game:HttpGet('https://raw.githubusercontent.com/synolope/meepcracked/main/loader.lua'))()
 local continuee = identifyexecutor() == "Krnl" or identifyexecutor() == "Synapse X" or queue_on_teleport
 if identifyexecutor() == "WRD-API" then continuee = false end -- queue_on_teleport missing and errors
 if continuee == false then -- https://pastebin.com/raw/SjcYQ23F
