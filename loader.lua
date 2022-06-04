@@ -26,14 +26,11 @@ if game.CreatorId == 123247 or game.PlaceId == 370731277 and continuee == true t
 	local loaderurl = githublink .. "loader.lua"
 	local uicheckurl = githublink .. "uicheck.lua"
 	local scripturl = ""
-	if identifyexecutor() == "Synapse X" then
+	if identifyexecutor() == "Synapse X" or identifyexecutor() == "Fluxus" then
 		scripturl = githublink .. "synapse.lua"
 	end
 	if identifyexecutor() == "Krnl" or queue_on_teleport then
 		scripturl = githublink .. "krnl.lua"
-	end
-	if identifyexecutor() == "Fluxus" then
-		scripturl = githublink .. "mainscript.lua"
 	end
 	queueOnTeleport([[
     		wait(3)
