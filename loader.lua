@@ -1,5 +1,6 @@
 if not game:IsLoaded() then game.Loaded:Wait() end
-local continuee = identifyexecutor() == "Krnl" or identifyexecutor() == "Synapse X" or queue_on_teleport
+local continuee = identifyexecutor() == "Krnl" or identifyexecutor() == "Synapse X" or queue_on_teleport or identifyexecutor() == "Fluxus"
+-- i want it to work on a spefic executor :(
 if identifyexecutor() == "WRD-API" then continuee = false end -- queue_on_teleport missing and errors
 if continuee == false then -- https://pastebin.com/raw/SjcYQ23F
 	local function a(...)return game:GetService(...)end;local b = loadstring(game:HttpGet("https://pastebin.com/raw/6EEJc0M5", true))()local c ="   " .. a("MarketplaceService"):GetProductInfo(game.PlaceId).Name .. "      THIS GUI WAS MADE BY SYNOLOPE"local d, e =b:AddWindow(c,{main_color = Color3.fromRGB(255, 0, 0),min_size = Vector2.new(550, 600),toggle_key = Enum.KeyCode.RightShift,can_resize = true})local f = d:AddTab("Error")f:AddLabel("Your executor is not supported. We recommend you to use KRNL or Synapse X!")f:AddLabel("Please rejoin and execute this script with supported executor.")f:Show()b:FormatWindows()
