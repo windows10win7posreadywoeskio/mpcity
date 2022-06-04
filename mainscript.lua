@@ -20,9 +20,7 @@ local library = loadstring(game:HttpGet("https://pastebin.com/raw/6EEJc0M5",true
 
 local guiname = "   " .. MarketplaceService:GetProductInfo(game.PlaceId).Name .. "      THIS GUI WAS MADE BY SYNOLOPE"
 
-if Players.LocalPlayer.UserId == 3207091435 then -- little something for me
-	guiname = "   " .. MarketplaceService:GetProductInfo(game.PlaceId).Name .. "      OWNER GUI"
-end
+guiname = "   " .. MarketplaceService:GetProductInfo(game.PlaceId).Name .. "     GUI MADE BY SYNOLOPE -- " .. identifyexecutor()
 
 local Window,frame = library:AddWindow(guiname, {
 	main_color = Color3.fromRGB(255, 0, 191),
